@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOCK_LINK | Global Interview Gateway</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Inline additions to handle tab switching transitions */
+    .auth-toggle-header {
+      display: flex;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 24px;
+    }
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .auth-tab.active {
+      color: #818cf8;
+      border-bottom: 2px solid #6366f1;
+      margin-bottom: -2px;
+    }
+    .hidden-form {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-mask"></div>
+
+  <div class="content-layer">
+    
+    <nav class="navbar">
+      <a href="index.html" class="logo">MOCK_LINK</a>
+      <span style="font-size: 13px; color: #94a3b8; font-weight: 600;">Standard Fee: ₹50 / Mock Interview</span>
+    </nav>
+
+    <div class="top-auth-container">
+      <div class="glass-card central-login-box">
+        
+        <div class="auth-toggle-header">
+          <div id="tabLogin" class="auth-tab active" onclick="toggleAuthMode('login')">Sign In</div>
+          <div id="tabRegister" class="auth-tab" onclick="toggleAuthMode('register')">Create Account</div>
+        </div>
+
+        <form id="loginGatewayForm">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="form-control" required placeholder="name@domain.com">
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" required placeholder="••••••••">
+          </div>
+
+          <div class="form-group">
+            <label for="loginRole">Account Profile Role</label>
+            <select id="loginRole" class="form-control">
+              <option value="candidate">Candidate (Fresher)</option>
+              <option value="hr">Interviewer (HR Expert)</option>
+              <option value="admin">Platform Administrator</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary">Enter Dashboard Workspace</button>
+        </form>
+
+        <form id="registerGatewayForm" class="hidden-form">
+          <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <input type="email" id="regEmail" class="form-control" required placeholder="yourname@domain.com">
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Create Password</label>
+            <input type="password" id="regPassword" class="form-control" required placeholder="Minimum 8 characters">
+          </div>
+
+          <div class="form-group">
+            <label for="regRole">Register As A:</label>
+            <select id="regRole" class="form-control" onchange="handleRegistrationRoleChange()">
+              <option value="candidate">Candidate (Fresher Account)</option>
+              <option value="hr">Interviewer (HR Expert Account)</option>
+            </select>
+          </div>
+
+          <div class="form-group hidden-form" id="regHrCompanyGroup">
+            <label for="regCompany">Current Corporate Company</label>
+            <input type="text" id="regCompany" class="form-control" placeholder="e.g., Google, Infosys, Amazon">
+          </div>
+
+          <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px; line-height: 1.4;">
+            * Candidates will manage and upload their active technical resume PDF directly from inside their workspace dashboard.
+          </p>
+
+          <button type="submit" class="btn-primary" style="background: #10b981;">Register & Initialize Account</button>
+        </form>
+
+      </div>
+    </div>
+
+    <footer class="downside-about-section">
+      <div class="about-inner-grid">
+        <div class="about-intro">
+          <h2>About Our Global Network</h2>
+          <p>MOCK_LINK is a highly reliable marketplace designed to prepare modern freshers for real-world technical interviews. By reducing barriers and providing monetary incentives to active HR managers, we establish a steady stream of mock assessments worldwide.</p>
+        </div>
+
+        <div class="about-steps-grid">
+          <div class="step-card">
+            <span class="step-num">01</span>
+            <h3>Fresher Entry</h3>
+            <p>Candidates log into their personal portal, configure their target technical streams, upload their active resume file securely, and deposit a standard escrow payment of ₹50.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">02</span>
+            <h3>Open Pooling</h3>
+            <p>The system broadcasts the request live into the Open Market Pool. Matching HR professionals can review details and claim requests that align with their background.</p>
+          </div>
+          <div class="step-card">
+            <span class="step-num">03</span>
+            <h3>Google Meet</h3>
+            <p>Upon acceptance, the backend automatically generates a secure Google Meet link. The interview goes live, and actionable feedback/tips are returned directly to the fresher.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Switches view layouts between Login mode and Register Mode
+    function toggleAuthMode(mode) {
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+      const loginForm = document.getElementById('loginGatewayForm');
+      const registerForm = document.getElementById('registerGatewayForm');
+
+      if (mode === 'login') {
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+        loginForm.classList.remove('hidden-form');
+        registerForm.classList.add('hidden-form');
+      } else {
+        tabRegister.classList.add('active');
+        tabLogin.classList.remove('active');
+        registerForm.classList.remove('hidden-form');
+        loginForm.classList.add('hidden-form');
+      }
+    }
+
+    // Handles inner registration layout adjustments if role options change
+    function handleRegistrationRoleChange() {
+      const role = document.getElementById('regRole').value;
+      const companyGroup = document.getElementById('regHrCompanyGroup');
+      
+      if (role === 'hr') {
+        companyGroup.classList.remove('hidden-form');
+      } else {
+        companyGroup.classList.add('hidden-form');
+      }
+    }
+
+    // Route Sign-In flow
+    document.getElementById('loginGatewayForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const selectedRole = document.getElementById('loginRole').value;
+      window.location.href = selectedRole + '-dashboard.html';
+    });
+
+    // Route Sign-Up flow
+    document.getElementById('registerGatewayForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const assignedRole = document.getElementById('regRole').value;
+      alert("Registration Successful! Your new profile has been initialized. Redirecting to your workspace...");
+      window.location.href = assignedRole + '-dashboard.html';
+    });
+  </script>
+</body>
+</html>

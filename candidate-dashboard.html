@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Workspace | MOCK_LINK</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Main Layout Grid Split: Left Menu, Right Workspace Panel */
+    .dashboard-wrapper {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - 73px);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Left Sidebar Menu Layout Container */
+    .sidebar {
+      background: rgba(15, 23, 42, 0.6);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .menu-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      color: #ffffff;
+      background: rgba(99, 102, 241, 0.15);
+      border-left: 4px solid #818cf8;
+    }
+
+    .logout-item {
+      color: #f43f5e;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 15px;
+      margin-top: auto;
+    }
+    .logout-item:hover {
+      background: rgba(244, 63, 94, 0.1);
+      border-left: 4px solid #f43f5e;
+    }
+
+    /* Right Main Content Panel Layout */
+    .workspace-panel {
+      padding: 40px;
+      overflow-y: auto;
+      height: calc(100vh - 73px);
+    }
+
+    .content-block {
+      display: none; /* Controlled dynamically via JavaScript tabs system */
+    }
+    .content-block.active {
+      display: block;
+    }
+
+    /* Table styling frameworks */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .data-table th, .data-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .data-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .status-pool { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-ready { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .btn-table {
+      background: #10b981;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-mask"></div>
+
+  <div class="content-layer">
+    
+    <nav class="navbar" style="position: relative; z-index: 20;">
+      <a href="#" class="logo">MOCK_LINK</a>
+      <span style="font-size: 14px; color: #cbd5e1; background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 20px;">
+        Candidate Workspace
+      </span>
+    </nav>
+
+    <div class="dashboard-wrapper">
+      
+      <aside class="sidebar">
+        <div class="menu-group">
+          <div class="menu-item active" onclick="switchTab(this, 'profileView')">👤 Profile</div>
+          <div class="menu-item" onclick="switchTab(this, 'requestMockView')">➕ Request a Mock Interview</div>
+          <div class="menu-item" onclick="switchTab(this, 'requestedPoolView')">📂 Requested Interviews</div>
+          <div class="menu-item" onclick="switchTab(this, 'upcomingView')">🗓️ Upcoming Interviews</div>
+          <div class="menu-item" onclick="switchTab(this, 'completedView')">✅ Completed Interviews</div>
+          <div class="menu-item" onclick="switchTab(this, 'profileUpdateView')">⚙️ Profile Update</div>
+        </div>
+
+        <a href="index.html" class="menu-item logout-item">🚪 Logout</a>
+      </aside>
+
+      <main class="workspace-panel">
+        
+        <section id="profileView" class="content-block active glass-card">
+          <h2 style="color: #818cf8; margin-bottom: 10px;">Candidate Profile Profile Overview</h2>
+          <p style="color: #cbd5e1; margin-bottom: 20px;">Welcome back to your workspace dashboard core panel view.</p>
+          <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; font-size: 15px; space-y: 10px;">
+            <p><strong>Name Context:</strong> Naveen Kumar</p>
+            <p style="margin-top: 8px;"><strong>Email System:</strong> naveen.mca@example.com</p>
+            <p style="margin-top: 8px;"><strong>Target Domain Stream:</strong> Computer Applications / Software Engineering</p>
+          </div>
+        </section>
+
+        <section id="requestMockView" class="content-block glass-card">
+          <h2 style="color: #818cf8; margin-bottom: 6px;">Request a Mock Assessment Round</h2>
+          <p style="color: #94a3b8; font-size: 14px; margin-bottom: 24px;">Complete your contextual parameters below. HR professionals will review this operational framework context when scheduling matches.</p>
+          
+          <form id="detailedMockForm">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 20px;">
+              
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="mockCandidateName" required class="form-control" placeholder="Your Name" >
+              </div>
+
+              <div class="form-group">
+                <label>Company Applied To</label>
+                <input type="text" id="mockCompany" required class="form-control" placeholder="e.g., Infosys, Amazon, TechCorp">
+              </div>
+
+              <div class="form-group">
+                <label>Target Domain Stream</label>
+                <select id="mockStream" class="form-control" required>
+                  <option>Software Development</option>
+                  <option>Data Engineering</option>
+                  <option>Cyber Security</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Interested Date & Time Slot</label>
+                <input type="datetime-local" id="mockInterestedSlot" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label>Original Interview Slot (Target Schedule)</label>
+                <input type="datetime-local" id="mockOriginalSlot" required class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label>Upload Resume (PDF File Asset)</label>
+                <input type="file" accept=".pdf" class="form-control">
+              </div>
+
+            </div>
+
+            <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); p: 15px; border-radius: 10px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <span style="font-size: 14px; color: #cbd5e1;">Standard Escrow Secure Platform Deposit Fee</span>
+              <strong style="font-size: 24px; color: #818cf8;">₹50 Only</strong>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: auto; padding: 12px 35px; margin-left: auto; display: block;">
+              Pay ₹50 & Broadcast Request
+            </button>
+          </form>
+        </section>
+
+        <section id="requestedPoolView" class="content-block glass-card">
+          <h2 style="margin-bottom: 15px;">Your Open Market Pool Requests</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Target Company</th>
+                <th>Desired Slot</th>
+                <th>Status Mapping</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Infosys Springboard</td>
+                <td>June 24, 2026 - 10:00 AM</td>
+                <td><span class="status-badge status-pool">Broadcasting in Pool</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="upcomingView" class="content-block glass-card">
+          <h2 style="margin-bottom: 15px;">Confirmed Upcoming Connections</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Company context</th>
+                <th>Finalized Time</th>
+                <th>Google Meet Execution Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>TechCorp Assessment</td>
+                <td>June 20, 2026 - 03:00 PM</td>
+                <td><a href="https://meet.google.com" target="_blank" class="btn-table">Join Google Meet</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="completedView" class="content-block glass-card">
+          <h2 style="margin-bottom: 15px;">Completed Performance Records</h2>
+          <div style="border-left: 4px solid #10b981; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 0 8px 8px 0;">
+            <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px;">
+              <span>Mock Round: Software Engineer (Data Engineering)</span>
+              <span style="color: #fbbf24;">★★★★★ (5/5)</span>
+            </div>
+            <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">
+              <strong>HR Assessment Tips:</strong> Excellent implementation depth on fundamental structures. Data engineering setup logic using PySpark join strategies looks great. Braced structures are well-managed.
+            </p>
+          </div>
+        </section>
+
+        <section id="profileUpdateView" class="content-block glass-card">
+          <h2 style="margin-bottom: 15px; color: #818cf8;">Update Profile Parameters</h2>
+          <form style="max-width: 500px; display: flex; flex-direction: column; gap: 15px;">
+            <div class="form-group">
+              <label>Update Mobile Number</label>
+              <input type="tel" class="form-control" placeholder="+91 XXXXX XXXXX">
+            </div>
+            <div class="form-group">
+              <label>Reset Password Identity Token</label>
+              <input type="password" class="form-control" placeholder="New Password String">
+            </div>
+            <button type="button" onclick="alert('Profile metrics updated successfully.')" class="btn-primary" style="width: auto; padding: 10px 20px;">Save Profile Updates</button>
+          </form>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+ <script>
+
+const API_BASE_URL = "http://localhost:5000/api/requests";
+  
+  // Dynamically resolve session data instead of using a hardcoded name
+  const loggedInUser = JSON.parse(localStorage.getItem('user')) || {};
+  
+  const candidateSession = {
+    id: loggedInUser.id || "664c39f25d4427b2d166c6ca",
+    name: loggedInUser.email ? loggedInUser.email.split('@')[0] : "Sai" 
+  };
+
+  function switchTab(clickedMenuItem, targetPanelId) {
+    document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+    clickedMenuItem.classList.add('active');
+
+    document.querySelectorAll('.content-block').forEach(block => block.classList.remove('active'));
+    document.getElementById(targetPanelId).classList.add('active');
+
+    if (targetPanelId === 'requestedPoolView' || targetPanelId === 'upcomingView' || targetPanelId === 'completedView') {
+      loadCandidateDataHistory();
+    }
+  }
+
+  // Update name in the UI when document structure loads
+  document.addEventListener("DOMContentLoaded", () => {
+    // Dynamically update the profile view panel text
+    const profilePanel = document.getElementById('profileView');
+    if (profilePanel) {
+      profilePanel.innerHTML = `
+        <h2 style="color: #818cf8; margin-bottom: 10px;">Candidate Profile Overview</h2>
+        <p style="color: #cbd5e1; margin-bottom: 20px;">Welcome back to your workspace dashboard core panel view.</p>
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; font-size: 15px;">
+          <p><strong>Name Context:</strong> ${candidateSession.name}</p>
+          <p style="margin-top: 8px;"><strong>Email System:</strong> ${loggedInUser.email || 'sai@example.com'}</p>
+          <p style="margin-top: 8px;"><strong>Target Domain Stream:</strong> Computer Applications / Software Engineering</p>
+        </div>
+      `;
+    }
+    loadCandidateDataHistory();
+  });
+
+  document.getElementById('detailedMockForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Patched selectors to target individual structural element IDs securely
+    const companyApplied = document.getElementById("mockCompany").value;
+    const stream = document.getElementById("mockStream").value;
+    const interestedSlot = document.getElementById("mockInterestedSlot").value;
+    const originalSlot = document.getElementById("mockOriginalSlot").value;
+
+    const payload = {
+      candidateId: candidateSession.id,
+      candidateName: candidateSession.name,
+      companyApplied,
+      stream,
+      interestedSlot,
+      originalSlot
+    };
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("🚀 Secure deposit verified! Request logged into the global market pool.");
+        document.getElementById('detailedMockForm').reset();
+        const targetMenuLink = document.querySelectorAll('.menu-item')[2];
+        switchTab(targetMenuLink, 'requestedPoolView');
+      } else {
+        alert("Error dispatching request: " + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to connect to backend. Please ensure node server.js is running on port 5000.");
+    }
+  });
+
+  async function loadCandidateDataHistory() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/candidate/${candidateSession.id}`);
+      const result = await response.json();
+
+      if (!result.success) return;
+      const historyData = result.data;
+
+      const poolBody = document.querySelector('#requestedPoolView tbody');
+      const upcomingBody = document.querySelector('#upcomingView tbody');
+      const completedContainer = document.querySelector('#completedView');
+
+      poolBody.innerHTML = "";
+      upcomingBody.innerHTML = "";
+      completedContainer.innerHTML = `<h2 style="margin-bottom: 15px;">Completed Performance Records</h2>`;
+
+      historyData.forEach(item => {
+        const formattedInterestedDate = new Date(item.interestedSlot).toLocaleString();
+
+        if (item.status === 'pending') {
+          poolBody.innerHTML += `
+            <tr>
+              <td>${item.companyApplied} (${item.stream})</td>
+              <td>${formattedInterestedDate}</td>
+              <td><span class="status-badge status-pool">Broadcasting in Pool</span></td>
+            </tr>
+          `;
+        }
+
+        if (item.status === 'accepted') {
+          upcomingBody.innerHTML += `
+            <tr>
+              <td>${item.companyApplied} (${item.stream})</td>
+              <td>${formattedInterestedDate}</td>
+              <td><a href="${item.meetLink || 'https://meet.google.com'}" target="_blank" class="btn-table">Join Google Meet</a></td>
+            </tr>
+          `;
+        }
+
+        if (item.status === 'completed') {
+          completedContainer.innerHTML += `
+            <div style="border-left: 4px solid #10b981; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 15px;">
+              <div style="display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 10px;">
+                <span>Mock Round: ${item.stream} for ${item.companyApplied}</span>
+                <span style="color: #fbbf24;">★★★★★</span>
+              </div>
+              <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6;">
+                <strong>HR Assessment Feedback:</strong> ${item.feedback || 'Excellent profile foundations.'}
+              </p>
+            </div>
+          `;
+        }
+      });
+
+      if(poolBody.innerHTML === "") poolBody.innerHTML = `<tr><td colspan="3" style="color:#64748b; font-style:italic;">No active pool requests.</td></tr>`;
+      if(upcomingBody.innerHTML === "") upcomingBody.innerHTML = `<tr><td colspan="3" style="color:#64748b; font-style:italic;">No upcoming interviews scheduled yet.</td></tr>`;
+
+    } catch (err) {
+      console.error("Error loading candidate panel history data logs:", err);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", loadCandidateDataHistory);
+</script>
+</body>
+</html>

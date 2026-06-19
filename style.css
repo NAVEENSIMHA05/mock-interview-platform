@@ -1,0 +1,223 @@
+/* Clean standard structural resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  /* High-quality corporate background image with a solid color fallback */
+  background: #0f172a url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1920') no-repeat center center fixed;
+  background-size: cover;
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Global Content Wrapper Layer */
+.content-layer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  /* Fallback overlay in case backdrop-filter blur isn't fully supported locally */
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  backdrop-filter: blur(8px);
+}
+
+/* Navbar Layout Header Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #818cf8;
+  text-decoration: none;
+}
+
+/* Center Form Layout Alignment Block */
+.top-auth-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+}
+
+/* Glassmorphism Input Profile Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.central-login-box {
+  width: 100%;
+  max-width: 450px;
+}
+
+.central-login-box h2 {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+
+.central-login-box .subtitle {
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
+/* Standardized Input Formatting Form Blocks */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #818cf8;
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+/* Dropdown Choice Visibilities Fix */
+select.form-control option {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+/* Dynamic Primary Interaction Buttons */
+.btn-primary {
+  width: 100%;
+  background: #6366f1;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover {
+  background: #4f46e5;
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Downside Operational Blueprint Layout Section */
+.downside-about-section {
+  background: rgba(15, 23, 42, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 60px 40px;
+}
+
+.about-inner-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .about-inner-grid {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+.about-intro h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #818cf8;
+  margin-bottom: 16px;
+}
+
+.about-intro p {
+  color: #cbd5e1;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.about-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .about-steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-num {
+  font-size: 40px;
+  font-weight: 900;
+  color: rgba(129, 140, 248, 0.15);
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.step-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.step-card p {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Admin Workspace | MOCK_LINK</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .dashboard-wrapper {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - 73px);
+      position: relative;
+      z-index: 10;
+    }
+
+    .sidebar {
+      background: rgba(15, 23, 42, 0.6);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .menu-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .menu-item:hover, .menu-item.active {
+      color: #ffffff;
+      background: rgba(239, 68, 68, 0.15);
+      border-left: 4px solid #f43f5e;
+    }
+
+    .logout-item {
+      color: #f43f5e;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 15px;
+      margin-top: auto;
+    }
+
+    .workspace-panel {
+      padding: 40px;
+      overflow-y: auto;
+      height: calc(100vh - 73px);
+    }
+
+    .content-block {
+      display: none;
+    }
+    .content-block.active {
+      display: block;
+    }
+
+    /* Alert Banner Grid Components */
+    .alert-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .stuck-alert-card {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(239, 68, 68, 0.05);
+    }
+
+    .alert-meta h3 {
+      color: #f43f5e;
+      margin: 0 0 6px 0;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert-badge {
+      background: #f43f5e;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .btn-escalate {
+      background: #f43f5e;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-escalate:hover {
+      background: #e11d48;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-mask"></div>
+
+  <div class="content-layer">
+    
+    <nav class="navbar" style="position: relative; z-index: 20;">
+      <a href="#" class="logo" style="color: #f43f5e;">MOCK_LINK</a>
+      <span style="font-size: 14px; color: #cbd5e1; background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 20px;">
+        Root Admin Control Deck
+      </span>
+    </nav>
+
+    <div class="dashboard-wrapper">
+      
+      <aside class="sidebar">
+        <div class="menu-group">
+          <div class="menu-item active" onclick="switchTab(this, 'stuckAlertsView')">⚠️ 48hr Safety Alerts</div>
+          <div class="menu-item" onclick="switchTab(this, 'systemOverview')">📊 Platform Metrics</div>
+        </div>
+        <a href="index.html" class="menu-item logout-item">🚪 System Logout</a>
+      </aside>
+
+      <main class="workspace-panel">
+        
+        <section id="stuckAlertsView" class="content-block active glass-card">
+          <h2 style="color: #f43f5e; margin-bottom: 6px;">Escalation Safety Queue</h2>
+          <p style="color: #94a3b8; font-size: 14px;">The following student mock assessment placement requests have been pending in the market pool for over 48 hours without an HR claim match.</p>
+          
+          <div class="alert-grid" id="stuckAlertsContainer">
+            </div>
+        </section>
+
+        <section id="systemOverview" class="content-block glass-card">
+          <h2>Platform Infrastructure Health</h2>
+          <p style="color: #94a3b8; margin-top: 10px;">All connections to MongoDB instance and escrow matching channels are currently nominal.</p>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://localhost:5000/api/requests";
+
+    function switchTab(clickedMenuItem, targetPanelId) {
+      document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+      clickedMenuItem.classList.add('active');
+
+      document.querySelectorAll('.content-block').forEach(block => block.classList.remove('active'));
+      document.getElementById(targetPanelId).classList.add('active');
+
+      if (targetPanelId === 'stuckAlertsView') {
+        fetchStuckAlerts();
+      }
+    }
+
+    async function fetchStuckAlerts() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/admin/stuck`);
+        const result = await response.json();
+
+        if (!result.success) return;
+        const stuckRequests = result.data;
+
+        const container = document.getElementById('stuckAlertsContainer');
+        container.innerHTML = "";
+
+        stuckRequests.forEach(item => {
+          const createdDate = new Date(item.createdAt).toLocaleString();
+          
+          container.innerHTML += `
+            <div class="stuck-alert-card">
+              <div class="alert-meta">
+                <h3><span class="alert-badge">STUCK > 48H</span> ${item.candidateName}</h3>
+                <p style="font-size: 14px; color: #cbd5e1; margin-top: 4px;">
+                  Targeting <strong>${item.companyApplied}</strong> (${item.stream})
+                </p>
+                <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">
+                  Broadcast Initiated: ${createdDate}
+                </p>
+              </div>
+              <button onclick="triggerManualAssignment('${item._id}')" class="btn-escalate">Force Match Internally</button>
+            </div>
+          `;
+        });
+
+        if (stuckRequests.length === 0) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #34d399; font-weight: bold;">
+              ✅ Safety operational parameters verified. Zero requests are stuck in the market pipeline!
+            </div>
+          `;
+        }
+
+      } catch (err) {
+        console.error("Critical error querying system safety logs:", err);
+      }
+    }
+
+    function triggerManualAssignment(id) {
+      alert(`Routing override requested for entity context instance: ${id}. Dispatched high-priority invite links to corporate network branches.`);
+    }
+
+    // Initialize with a 5-second health polling check
+    document.addEventListener("DOMContentLoaded", () => {
+      fetchStuckAlerts();
+      setInterval(fetchStuckAlerts, 5000);
+    });
+  </script>
+</body>
+</html>
